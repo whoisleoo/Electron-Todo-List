@@ -134,12 +134,12 @@ function Home() {
           // HOME
           <div className="text-center">
             <div className="mb-12">
-               <div className="inline-block p-2 rounded-full bg-slate-800/50 backdrop-blur-md border border-slate-700/50 shadow-2xl mb-8 overflow-hidden">
+               <div className="inline-block p-2 rounded-full bg-indigo-600 backdrop-blur-md border border-slate-700/50 shadow-2xl mb-8 overflow-hidden">
                 <img src="../src/assets/icons/logo.png" alt="Logo" className="w-20 h-20 rounded-full object-cover" />
               </div>
               
-              <h1 className="text-4xl font-bold text-white hover:text-indigo-200 transition-colors mb-4 tracking-tight">
-                Task Hub
+              <h1 className="text-4xl font-bold text-white mb-4 tracking-tight">
+                Task <span className=' hover:text-indigo-700 hover:border-b hover:border-indigo-700 hover:transition-all'>Hub</span>
               </h1>
               <p className="text-m1 text-gray-300 max-w-md mx-auto leading-relaxed">
                 Organize suas tarefas e objetivos

@@ -35,7 +35,7 @@ function ListPage() {
                         </button>
 
                         {showUserMenu && (
-                            <div className="absolute right-0 top-full mt-7 w-48 bg-gray-700/20 rounded-lg shadow-xl border border-gray-700 z-50">
+                            <div className="absolute right-0 top-full mt-7 w-48 bg-black rounded-lg shadow-xl border border-gray-700 z-50">
                                 <div className="p-3 border-b border-gray-700">
                                     <div className="text-sm font-medium">{user.username}</div>
                                     <div className="text-xs text-gray-400">{user.email}</div>
