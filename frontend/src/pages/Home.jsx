@@ -17,6 +17,7 @@ function Home() {
     <div className="backdrop-blur-md bg-black rounded-2xl p-8 shadow-2xl border border-slate-700/50 max-w-md w-full mx-4">
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold text-white mb-2">Entrar</h2>
+        <a className="text-white" href="http://localhost:5173/lists">testar</a>
         <p className="text-gray-300">Acesse sua conta</p>
       </div>
       
@@ -151,7 +152,7 @@ function Home() {
                   onClick={() => setCurrentView('login')}
                   className="group relative px-8 py-4 bg-indigo-600 hover:bg-indigo-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 min-w-[160px]"
                 >
-                  <span className="relative z-10">Entrar</span>
+                  <span className="relative z-10" >Entrar</span>
                 </button>
                 
                 <button

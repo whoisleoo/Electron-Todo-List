@@ -26,8 +26,8 @@ function startBackend(){
 function createMainWindow(){
     mainWindow = new BrowserWindow({
         title: 'Task Hub',
-        width: devDetector ? 500 : 600,
-        height: 700,
+        width: devDetector ? 700 : 700,
+        height: 750,
         
         icon: path.join(__dirname, '../frontend/src/assets/icons/icon.png'),
         frame: false,
