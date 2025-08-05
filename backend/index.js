@@ -1,4 +1,4 @@
-import { app, BrowserWindow} from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -8,42 +8,87 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const macDetector = process.platform == 'darwin';
 const devDetector = process.env.NODE_ENV !== 'development';
+let mainWindow;
 let backend;
 
- function startBackend(){
+function startBackend(){
     try{
-    backend = spawn('node', ['../backend/server.js'], {
-        stdio: 'inherit',
-        shell: true
-    })
-    console.log("Iniciando backend...")
-}catch(error){
-    console.log(`Não deu pra inicializar o bernardo devido a ${error}
-        `)
-}
+        backend = spawn('node', ['../backend/server.js'], {
+            stdio: 'inherit',
+            shell: true
+        })
+        console.log("Iniciando backend...")
+    }catch(error){
+        console.log(`Não deu pra inicializar o bernardo devido a ${error}`)
+    }
 }
 
 function createMainWindow(){
-    const win = new BrowserWindow({ //especificações da janela
-        title: 'Lista Incrivel',
-        width: devDetector ? 900 : 600, //se n tive no modo dev roda a janela maior
-        height: 1200
+    mainWindow = new BrowserWindow({
+        title: 'Task Hub',
+        width: devDetector ? 500 : 600,
+        height: 700,
+        
+        icon: path.join(__dirname, '../frontend/src/assets/icons/icon.png'),
+        frame: false,
+        backgroundColor: '#000000',
+        roundedCorners: true,
+        autoHideMenuBar: true,
+        titleBarStyle: macDetector ? 'hiddenInset' : 'default',
+        show: false,
+
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, './src/utils/preload.js')
+        }
+    })
+
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show()
     })
 
     if(devDetector){
-        win.webContents.openDevTools();
+        mainWindow.webContents.openDevTools();
     }
 
-    win.loadURL('http://localhost:5173/'); // ip do front
+    mainWindow.loadURL('http://localhost:5173/');
 
-    win.webContents.on('did-fail-load', () => {
-        win.loadFile(path.join(__dirname, '../frontend/src/pages/fallback.html')) // caso n de load no vite usa essa pagina de fallback de erro
+    mainWindow.webContents.on('did-fail-load', () => {
+        mainWindow.loadFile(path.join(__dirname, '../frontend/src/pages/fallback.html'))
     })
 }
 
-app.whenReady().then(() =>{
+app.whenReady().then(() => {
     startBackend();
     createMainWindow();
+
+    // HANDLERS IPC - SEM BIBLIOTECAS EXTERNAS
+    ipcMain.on('window-minimize', () => {
+        if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.minimize()
+        }
+    })
+
+    ipcMain.on('window-maximize', () => {
+        if (mainWindow && !mainWindow.isDestroyed()) {
+            if (mainWindow.isMaximized()) {
+                mainWindow.unmaximize()
+            } else {
+                mainWindow.maximize()
+            }
+        }
+    })
+
+    ipcMain.on('window-close', () => {
+        if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.close()
+        }
+    })
+
+    ipcMain.handle('window-is-maximized', () => {
+        return mainWindow && !mainWindow.isDestroyed() ? mainWindow.isMaximized() : false
+    })
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0){
@@ -52,8 +97,7 @@ app.whenReady().then(() =>{
     })
 })
 
-
-app.on('window-all-closed', () =>{ //ver se n é mac
+app.on('window-all-closed', () => {
     if(!macDetector){
         app.quit();
     }

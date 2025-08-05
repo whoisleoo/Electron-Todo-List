@@ -133,14 +133,14 @@ function Home() {
           // HOME
           <div className="text-center">
             <div className="mb-12">
-              <div className="inline-block p-6 rounded-full bg-slate-800/50 backdrop-blur-md border border-slate-700/50 shadow-2xl mb-8">
-                <img src="../assets/icons/logo.png" alt="Logo" className="w-16 h-16" />
+               <div className="inline-block p-2 rounded-full bg-slate-800/50 backdrop-blur-md border border-slate-700/50 shadow-2xl mb-8 overflow-hidden">
+                <img src="../src/assets/icons/logo.png" alt="Logo" className="w-20 h-20 rounded-full object-cover" />
               </div>
               
-              <h1 className="text-6xl font-bold text-white mb-4 tracking-tight">
-                Todo List
+              <h1 className="text-4xl font-bold text-white hover:text-indigo-200 transition-colors mb-4 tracking-tight">
+                Task Hub
               </h1>
-              <p className="text-xl text-gray-300 max-w-md mx-auto leading-relaxed">
+              <p className="text-m1 text-gray-300 max-w-md mx-auto leading-relaxed">
                 Organize suas tarefas e objetivos
               </p>
             </div>
@@ -149,7 +149,7 @@ function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <button
                   onClick={() => setCurrentView('login')}
-                  className="group relative px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 min-w-[160px]"
+                  className="group relative px-8 py-4 bg-indigo-600 hover:bg-indigo-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 min-w-[160px]"
                 >
                   <span className="relative z-10">Entrar</span>
                 </button>
@@ -163,7 +163,7 @@ function Home() {
               </div>
               
               <p className="text-gray-400 text-sm mt-8">
-                Desenvolvido por whoisleoo
+                Desenvolvido por <span className="hover:text-indigo-500 transition-colors">whoisleoo</span>
               </p>
             </div>
           </div>
