@@ -10,13 +10,17 @@ const macDetector = process.platform == 'darwin';
 const devDetector = process.env.NODE_ENV !== 'development';
 let backend;
 
-function startBackend(){
+ function startBackend(){
+    try{
     backend = spawn('node', ['../backend/server.js'], {
         stdio: 'inherit',
         shell: true
     })
-    console.log(`=============== PAINEL BACKEND BERNARDO ================
-     ATENÇÃO BACKEND BERNARDO ATIVADO ⚠️⚠️⚠️⚠️⚠️⚠️⚠️   `);
+    console.log("Iniciando backend...")
+}catch(error){
+    console.log(`Não deu pra inicializar o bernardo devido a ${error}
+        `)
+}
 }
 
 function createMainWindow(){

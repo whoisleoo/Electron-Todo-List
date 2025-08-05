@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Home from './pages/Home'
 
 function App() {
 
   return (
-    <>
-      <h1>Bem vindo ao aplicativo todolist</h1>
-    </>
+     <Router>
+      <div className="min-h-screen bg-gray-100">
+        <main className='flex-1'>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<div className="text-center py-8">Página não encontrada</div>} />
+        </Routes>
+        </main>
+      </div>
+    </Router>
   )
 }
 
