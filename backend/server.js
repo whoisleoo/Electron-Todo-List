@@ -1,8 +1,7 @@
 import express from 'express'
-import bcrypt from 'bcrypt'
-import jtw from 'jsonwebtoken'
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
+import userRoutes from './src/routes/userRoutes.js'
 
 const prisma = new PrismaClient()
 const app = express()
@@ -13,8 +12,12 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.status(200).json({
+    message : "Bem vindo ao bequi endi da listagem de coisas"
+  })
 })
+
+app.use('/', userRoutes)
 
 app.listen(porta, () => {
   console.log(`=============== PAINEL BACKEND BERNARDO ================
