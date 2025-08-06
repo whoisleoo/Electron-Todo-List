@@ -1,13 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SideBar from '../components/SideBar'
+import api from '../services/api.js'
+import { useNavigate } from 'react-router-dom';
+
+
 
 function ListPage() {
+    const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false)
+    const [user, setUser] = useState(null);
 
-    const user = {
-        username: "Bulletz",
-        email: "bernardokr@fartura.com"
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        navigate('/');
     }
+
+    useEffect(() =>{
+        const userData = localStorage.getItem('user');
+        const token = localStorage.getItem('token')
+        if(userData && token){
+            setUser(JSON.parse(userData))
+        } else{
+            navigate('/')
+        }
+    }, [navigate])
+
+    if(!user){
+        return (
+            <div>
+                <h1>SOU UMA MENSAGEM DE LOADING...</h1>
+            </div>
+        )
+    }
+
+
 
     return (
         <div className="flex h-screen bg-black text-white">
@@ -42,13 +70,14 @@ function ListPage() {
                                 </div>
                                 <div className="py-2">
                                     <button
-                                        onClick={() => {}}
+                                        onClick={handleLogout}
                                         className="w-full text-left px-4 py-2 text-sm hover:bg-gray-700 transition-colors"
                                     >
                                         Logout
                                     </button>
                                     <button
-                                        onClick={console.log("bernardo")}
+                                        onClick={() => {  window.close()
+                                        }}
                                         className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors"
                                     >
                                         Sair do aplicativo

@@ -9,7 +9,6 @@ function SideBar() {
     return (
         <div className="w-80 bg-black border-r border-gray-700 flex flex-col">
             <div className="p-4 border-b border-gray-700">
-                <a className="border-b border-indigo-700 text-indigo-700" href="http://localhost:5173/" >clique pra volta pro login</a>
                 <h2 className="text-lg font-semibold text-white mb-4">Suas Listas</h2>
                 
                 <button
