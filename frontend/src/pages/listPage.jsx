@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import SideBar from '../components/SideBar'
+import SideBar from '../components/sideBar'
 import api from '../services/api.js'
 import { useNavigate } from 'react-router-dom';
 

@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 
 function SideBar() {
-    
+
 
    
 
@@ -22,6 +22,7 @@ function SideBar() {
                     Nova Lista
                 </button>
             </div>
+
 
             <div className="flex-1 overflow-y-auto">
                 <div className="p-2">

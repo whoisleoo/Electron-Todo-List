@@ -1,6 +1,6 @@
 import express from 'express'
-import { authentication } from '../middlewares/auth';
-import { buscarList, createList, deleteList } from '../controllers/listController';
+import { authentication } from '../middlewares/auth.js';
+import { buscarList, createList, deleteList } from '../controllers/listController.js';
 
 const router = express.Router()
 

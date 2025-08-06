@@ -102,3 +102,48 @@ export const deleteList = async function(req, res){
 
 }
 
+// =====================================================================
+//                         UPDATAR LISTA
+// =====================================================================
+
+export const updateList = async function (req, res){
+    const { id, nome } = req.params;
+    const userId = req.user.id
+
+    if(!nome){
+        return res.status(401).json({
+            error: "Nome não especificado."
+        })
+    }
+
+    try{
+        const lista = await prisma.list.findFirst({
+            where: { id: parseInt(id), userId: userId }
+
+        })
+
+        if(!lista){
+            return res.status(401).json({
+                error: "Essa lista não existe."
+            })
+        }
+
+        await prisma.list.update({
+            where: { id: parseInt(id) },
+                data: {
+                nome: nome.trim()
+            }
+        })
+
+        return res.status(200).json({
+            message: "Nome da lista alterada com sucesso"
+        })
+
+
+    }catch(error){
+        return res.status(500).json({
+            error: "Erro interno do servidor",
+            message: error.message
+        })
+    }
+}
