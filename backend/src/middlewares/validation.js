@@ -1,6 +1,4 @@
 
-import { parse } from "dotenv";
-import { decode } from "jsonwebtoken";
 
 // =============================================================================================
 //                                   VALIDAÇÃO DE EMAIL
@@ -50,15 +48,11 @@ export const validarRegistro = function (req, res, next){
 // =============================================================================================   
 
 export const validarLogin = function (req, res, next){
-    const { email, senha } = req.body;
+    const { username, senha } = req.body;
     const erros = [];
 
-    if(!email) erros.push("Email é obrigatório.");
+    if(!username) erros.push("Nome é obrigatório.");
     if(!senha) erros.push("Senha é obrigatória.");
-
-    if(email && !validarEmail(email)){
-        erros.push("Email fornecido está incorreto.");
-    }
 
     if(senha && senha.length < 3){
         erros.push("Sua senha deve ter pelo menos 3 caracteres.")
@@ -72,3 +66,5 @@ export const validarLogin = function (req, res, next){
     }
     next();
 };
+
+

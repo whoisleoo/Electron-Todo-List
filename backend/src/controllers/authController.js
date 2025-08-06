@@ -38,7 +38,7 @@ export const registrarUser = async function(req, res){
         if(error.code === 'P2002'){
             const campo = error.meta?.target?.[0] || 'Algum campo ai'
           
-                 return res.status(400).json({error: `${campo === 'email' ? 'Email' : 'CPF'} já está em uso.`})
+                 return res.status(400).json({error: `${campo === 'email' ? 'Email' : 'Username'} já está em uso.`})
             
         }
         res.status(500).json({
@@ -55,7 +55,7 @@ export const registrarUser = async function(req, res){
 // ====================================================================================================
 
 export const loginUser = async function (req, res){
-    const { username, password } = req.body;
+    const { username, senha } = req.body;
 
     try{
     const user = await prisma.user.findUnique({
@@ -68,13 +68,13 @@ export const loginUser = async function (req, res){
         }
     })
     if(!user){
-       return res.status(401).json({error: "Usuário com esse email não encontrado"});
+       return res.status(401).json({error: "Usuário com esse nome não encontrado"});
     }
 
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(senha, user.password);
 
     if(!match){
-       return res.status(401).json({error: "Email ou senha incorretos."})
+       return res.status(401).json({error: "Nome ou senha incorretos."})
     }
 
     const token = jwt.sign( 
@@ -120,7 +120,6 @@ export const verificarToken = async function (req, res){
             select: {
                 id: true,
                 email: true,
-                password: true,
                 username: true,
             }
         });
