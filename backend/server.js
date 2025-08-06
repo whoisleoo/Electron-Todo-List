@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import userRoutes from './src/routes/userRoutes.js'
+import listRoutes from './src/routes/listRoutes.js'
 
 const app = express()
 const porta = 7171
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/', userRoutes)
+app.use('/', listRoutes)
 
 app.listen(porta, () => {
   console.log(`=============== PAINEL BACKEND BERNARDO ================

@@ -7,6 +7,12 @@ import { prisma } from '../database/db.js'
 export const createList = async function(req, res){
     const { nome } = req.params;
     const userId = req.user.userId
+
+    if(!nome){
+        return res.status(400).json({
+            error: "Nome não especificado."
+        })
+    }
     
     try{
         const newList = await prisma.list.create({
@@ -17,7 +23,7 @@ export const createList = async function(req, res){
         });
 
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "Lista criada com sucesso!",
             lista: newList
         })
@@ -46,7 +52,7 @@ export const buscarList = async function(req, res){
             }
         });
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "Buscando listas...",
             lista: allList,
             total: allList.length
@@ -82,7 +88,7 @@ export const deleteList = async function(req, res){
             where: { id: parseInt(id) }
         })
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "Lista deletada com sucesso."
         })
 
