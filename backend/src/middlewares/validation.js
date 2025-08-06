@@ -19,7 +19,7 @@ export const validarRegistro = function (req, res, next){
 
     if(!email) erros.push("Email é obrigatório.");
     if(!senha) erros.push("Senha é obrigatória.");
-    if(!confSenha) erros.push("Digite a senha novamente");
+    if(senha && !confSenha) erros.push("Digite a senha novamente");
     if(!username) erros.push("Nome é obrigatório.");
 
     

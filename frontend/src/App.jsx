@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Home from './pages/Home'
 import ListPage from './pages/ListPage'
+import { BrowserRouter } from 'react-router-dom';
 import TitleBar from './components/TitleBar'
 
 function App() {
