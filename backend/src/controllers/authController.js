@@ -1,6 +1,6 @@
-import { prisma } from "../database/db.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { prisma } from '../database/db.js'
 
 // =====================================================================
 //                         REGISTRAR PIAZINHO
@@ -27,7 +27,7 @@ export const registrarUser = async function(req, res){
         });
 
         const { password: _, ...userFilter } = newUser;
-        console.log(`Usuario ${userFilter.nome} foi criado.`)
+        console.log(`Usuario ${userFilter.username} foi criado.`)
 
         return res.status(200).json({
             message: "Deu boa pra cria um piazinho",
@@ -42,7 +42,8 @@ export const registrarUser = async function(req, res){
             
         }
         res.status(500).json({
-            error: "Deu algum erro ai n vou te contar qual"
+            error: "Alguma coisa deu errado",
+            message: error.message
         })
     }
 }
@@ -58,7 +59,7 @@ export const loginUser = async function (req, res){
 
     try{
     const user = await prisma.user.findUnique({
-        where: { nome: nome.trim() },
+        where: { username: username.trim() },
         select: {
           id: true,
           email: true,
@@ -119,7 +120,7 @@ export const verificarToken = async function (req, res){
             select: {
                 id: true,
                 email: true,
-                senha: true,
+                password: true,
                 username: true,
             }
         });

@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "postinstall": "prisma generate",
+    "dev": "prisma db push && node server.js",
+    "start": "prisma generate && electron .",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev"
   },
   "keywords": [],
   "author": "",
