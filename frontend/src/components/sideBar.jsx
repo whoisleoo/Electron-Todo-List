@@ -225,6 +225,10 @@ const ErrorMessage = ({message}) => {
                     placeholder="Digite o nome da lista"
                     value={input}
                     onChange={(e) => setInput(e.target.value)} //captura digitação e aplica o valor
+                     onKeyUp={(e) => {
+                                            if (e.key === 'Enter') criarListas()
+                                            if (e.key === 'Escape') setShowBar(false)
+                                        }}
                     className="w-full px-3 py-2 bg-black-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
             </div>
@@ -267,7 +271,7 @@ const ErrorMessage = ({message}) => {
                                         type="text"
                                         value={inputEdit}
                                         onChange={(e) => setInputEdit(e.target.value)}
-                                        onKeyPress={(e) => {
+                                        onKeyUp={(e) => {
                                             if (e.key === 'Enter') editLista()
                                             if (e.key === 'Escape') fecharEdit()
                                         }}
