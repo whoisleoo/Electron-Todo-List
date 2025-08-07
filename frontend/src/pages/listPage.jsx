@@ -47,7 +47,7 @@ function ListPage() {
                     <div className="relative">
                         <button
                             onClick={() => setShowUserMenu(!showUserMenu)}
-                            className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                            className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-900/60 transition-colors"
                         >
                             <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-sm font-semibold">
                                 {user.username.charAt(0).toUpperCase()}

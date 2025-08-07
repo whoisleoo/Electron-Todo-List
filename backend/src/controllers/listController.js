@@ -40,7 +40,7 @@ export const createList = async function(req, res){
 // =====================================================================
 
 export const buscarList = async function(req, res){
-    const userId = req.user.userId
+    const userId = req.user.id
     
     try{
         const allList = await prisma.list.findMany({
