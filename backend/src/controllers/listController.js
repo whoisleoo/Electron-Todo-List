@@ -5,8 +5,8 @@ import { prisma } from '../database/db.js'
 // =====================================================================
 
 export const createList = async function(req, res){
-    const { nome } = req.params;
-    const userId = req.user.userId
+    const { nome } = req.body;
+    const userId = req.user.id
 
     if(!nome){
         return res.status(400).json({
@@ -17,7 +17,7 @@ export const createList = async function(req, res){
     try{
         const newList = await prisma.list.create({
             data: {
-                nome: nome.trim(),
+                name: nome.trim(),
                 userId: userId
             }
         });
@@ -36,7 +36,7 @@ export const createList = async function(req, res){
 }
 
 // =====================================================================
-//                         REGISTRAR LISTA
+//                         BUSCAR LISTA
 // =====================================================================
 
 export const buscarList = async function(req, res){
@@ -107,7 +107,8 @@ export const deleteList = async function(req, res){
 // =====================================================================
 
 export const updateList = async function (req, res){
-    const { id, nome } = req.params;
+    const { nome } = req.body;
+    const { id } = req.params;
     const userId = req.user.id
 
     if(!nome){
@@ -131,7 +132,7 @@ export const updateList = async function (req, res){
         await prisma.list.update({
             where: { id: parseInt(id) },
                 data: {
-                nome: nome.trim()
+                name: nome.trim()
             }
         })
 
