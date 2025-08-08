@@ -120,17 +120,14 @@ const editLista = async function (){
          await api.put(`/list/${idEdit}`, 
             { nome: inputEdit.trim() },  
             { headers: { Authorization: `Bearer ${token}`}}
-        )
-    
-        setLists(lists.map(lista => 
+        ) 
+     
+        setLists(lists.map(lista =>  // mapeia o array da lista e ve se o id da lista é igual ao id da edição, se for desestrutura a lista e troca o nome pelo input
             lista.id === idEdit 
                 ? { ...lista, name: inputEdit.trim() } 
                 : lista
         ))
-        
-        setLists(lists.map(lista =>
-            lista.id === idEdit ? {...lista, name: inputEdit.trim() } : lista // mapeia o array da lista e ve se o id da lista é igual ao id da edição, se for desestrutura a lista e troca o nome pelo input
-        ))
+
 
         fecharEdit()
     } catch(error){
