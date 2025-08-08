@@ -129,6 +129,7 @@ const editLista = async function (){
         ))
 
 
+    
         fecharEdit()
     } catch(error){
 

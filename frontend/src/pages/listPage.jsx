@@ -9,6 +9,7 @@ function ListPage() {
     const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false)
     const [user, setUser] = useState(null);
+    
 
 
     const handleLogout = () => {
@@ -30,7 +31,7 @@ function ListPage() {
     if(!user){
         return (
             <div>
-                <h1>se vc ta vendo isso deu cagada no codigo</h1>
+                <h1>se vc ta vendo isso deu erro no codigo</h1>
             </div>
         )
     }

@@ -3,10 +3,13 @@ import Home from './pages/Home'
 import ListPage from './pages/listPage'
 import { BrowserRouter } from 'react-router-dom';
 import TitleBar from './components/TitleBar'
+import { ListProvider } from './contexts/listContext';
+
 
 function App() {
 
   return (
+    
      <Router>
       <TitleBar />
       <div className="min-h-screen bg-gray-100">
