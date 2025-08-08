@@ -21,12 +21,12 @@ export const buscarTodo = async function(req, res){
         
         if(!findList){
             return res.status(404).json({
-                error: "Você não possui permissão para ver essa lista."
+                error: "Não há nenhuma lista com esse ID."
             })
         }
 
         const allTodo = await prisma.todo.findMany({
-            where: { id: parseInt(listId)},
+            where: { listId: parseInt(listId)},
             orderBy: { createdAt: 'desc'}
 
         });
@@ -184,7 +184,7 @@ export const deleteTodo = async function(req, res){
 
 
         const todoExists = await prisma.todo.findFirst({
-            where: { id: parseInt(todoId), listId: listId }
+            where: { id: parseInt(todoId), listId: parseInt(listId) }
         })
 
         if(!todoExists){
