@@ -13,8 +13,13 @@ const ListContext = createContext()
 export function ListProvider({children}){
     const [selectedList, setSelectedList ] = useState(null) // a lista que vai ser selecionada
     const [todos, setTodos] = useState([]) //armazena os todos em uma array linda e perfeita
+    const [loading, setLoading] = useState(false)
     
     const selectList = (lista) => { // função que recebe a lista, bota no state a lista selecionada e os todo
+        if(selectedList && selectedList.id === lista.id ){
+            return // se é a mesma lista que foi selecionada então nao faz nada (evita carregamento desnecessário e flickering)
+        }
+        setLoading(true)
         setSelectedList(lista)
         setTodos([])
     }
@@ -23,7 +28,9 @@ export function ListProvider({children}){
         selectedList,
         selectList,
         todos,
-        setTodos
+        setTodos,
+        loading,
+        setLoading
     }
     return (
         <ListContext.Provider value={value}>

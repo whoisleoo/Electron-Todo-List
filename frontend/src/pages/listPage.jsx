@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function ListPage() {
-    const { selectedList, todos, setTodos } = useList() // dados do context
+    const { selectedList, todos, setTodos, loading, setLoading } = useList() // dados do context
     const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false)
     const [input, setInput] = useState('')
@@ -27,6 +27,8 @@ function ListPage() {
         setTodos(response.data.todos)
     }catch(error){
         setErrorMessage(`Não foi possivel buscar listas devido a ${error}`)
+    }finally{
+        setLoading(false)
     }
 }
 
@@ -40,7 +42,7 @@ const criarTodo = async function (){
     if(!selectedList) return
 
     if(!input.trim()){ //ve se n ta vazio o input
-        setErrorMessage("Digite o objetivo de sua tarefa.")
+        setErrorMessage("* Campo vazio")
         return 
     }
 
@@ -139,6 +141,7 @@ const criarTodo = async function (){
                 </div>
 
                 <div className="flex-1 p-6">
+                    
                     {!selectedList ? (
                         <div className="flex flex-col items-center justify-center h-full text-gray-400">
                             <svg className="w-16 h-16 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
@@ -147,16 +150,45 @@ const criarTodo = async function (){
                             <h2 className="text-xl font-semibold mb-2">Selecione uma lista</h2>
                             <p className="text-sm">Clique em uma lista na barra lateral para ver suas tarefas</p>
                         </div>
+                    ) : loading ? (
+   <div className="flex flex-col items-center justify-center h-full text-gray-400">
+    <div className="relative mb-4">
+        <div className="w-12 h-12 border-4 border-gray-700 border-t-indigo-600 rounded-full animate-spin"></div>
+        <div className="absolute inset-0 w-12 h-12 border-4 border-gray-700 border-b-indigo-400 rounded-full animate-spin" 
+             style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+    </div>
+    <p className="text-white text-sm animate-pulse">Carregando tarefas...</p>
+</div>
                     ) : todos.length === 0 ? (
+                        
                         <div className="flex flex-col items-center justify-center h-full text-gray-400">
                             <svg className="w-16 h-16 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                             </svg>
                             <h2 className="text-xl font-semibold mb-2">Nenhuma tarefa criada ainda</h2>
                             <p className="text-sm mb-4">Adicione a primeira tarefa da lista "{selectedList.name}"</p>
-                            <button onClick={criarTodo} className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
-                               Nova tarefa
-                            </button>
+                             <div className=" bg-black ">
+                                 <div className="flex gap-2">
+                                 <input
+                                    type="text"
+                                    placeholder="Digite sua tarefa"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                  onKeyUp={(e) => {
+                      if (e.key === 'Enter') criarTodo()
+                      if (e.key === 'Escape') setShowForm(false)
+                  }}
+                  className="flex-1 px-3 py-2 bg-black border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none " autoFocus/>
+              <button
+                  onClick={criarTodo}
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
+              >
+                  Adicionar
+              </button>
+          </div>
+          {errorMessage && <div className="text-red-400 text-sm mt-2">{errorMessage}</div>}
+      </div>
+                           
                         </div>
                     ) : (
                         <div className="max-w-4xl mx-auto">
@@ -167,10 +199,37 @@ const criarTodo = async function (){
                                         Total de larefas: {todos.length}
                                     </p>
                                 </div>
-                                <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
-                                    Nova tarefa
-                                </button>
+
+
+                             <div className=" bg-black ">
+                                 <div className="flex gap-2">
+                                 <input
+                                    type="text"
+                                    placeholder="Digite sua tarefa"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                  onKeyUp={(e) => {
+                      if (e.key === 'Enter') criarTodo()
+                      if (e.key === 'Escape') setShowForm(false)
+                  }}
+                  className="flex-1 px-3 py-2 bg-black border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2
+                     focus:ring-indigo-500" autoFocus/>
+              <button
+                  onClick={criarTodo}
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
+              >
+                  Adicionar
+              </button>
+          </div>
+          {errorMessage && <div className="text-red-400 text-sm mt-2">{errorMessage}</div>}
+      </div>
                             </div>
+
+
+                        
+
+                        
+
                             <div className="space-y-3">
                                 {todos.map(todo => (
                                     <div key={todo.id} className="p-4 bg-black border-gray-700 border rounded-lg transition-colors">
