@@ -6,7 +6,11 @@
 </div>
 
 <div align="center">
- <h3><em>TASK HUB</em></h3>
+ <br \>
+ <br \>
+ <br \>
+ <img alt="logo" src="icon.png" width="80"></img>
+ <h3><strong>TASK HUB</strong></h3>
  <p>Uma aplicação moderna de gerenciamento de tarefas feita em Electron</p>
 </div>
 
