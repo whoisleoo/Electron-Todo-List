@@ -22,12 +22,12 @@
 
 ### ✨ Principais Funcionalidades
 
-- ➤ **Criação de Listas** - Organize suas tarefas em categorias
-- ➤ **Gerenciamento de Tarefas** - Adicione, edite e marque como concluído
+- ➤ **Criação de Listas** - Organize suas tarefas em listas.
+- ➤ **Gerenciamento de Tarefas** - Adicione, remova e marque como concluida.
 - ➤ **Interface Moderna** - Design limpo e intuitivo
-- ➤ **Sistema de Autenticação** - Login seguro com JWT
-- ➤ **Persistência de Dados** - Seus dados salvos localmente
-- ➤ **Aplicação Desktop** - Funciona offline sem depender do navegador
+- ➤ **Sistema de Autenticação** - Login seguro com JWT e Bcrypt
+- ➤ **Salvamento de Dados** - Seus dados salvos localmente pelo SQLlite
+- ➤ **Aplicação Desktop** - Funciona offline sem depender do navegador (Necessário estar rodando em background)
 
 ---
 
