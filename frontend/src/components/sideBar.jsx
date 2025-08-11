@@ -50,6 +50,11 @@ const criarListas = async function (){
         return 
     }
 
+    if(input.length > 15){
+        setErrorMessage("Max de caracteres: 15")
+        return
+    }
+
     setErrorMessage('')
 
     try{
@@ -116,6 +121,12 @@ const fecharEdit = () => {
 //===========================================================
 
 const editLista = async function (){
+      if(inputEdit.length > 15){
+        setErrorMessage("Max de caracteres: 15")
+        return
+    }
+
+
     try{
         const token = localStorage.getItem('token')
          await api.put(`/list/${idEdit}`, 

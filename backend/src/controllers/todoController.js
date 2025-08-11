@@ -100,16 +100,11 @@ export const createTodo = async function(req, res){
 // =====================================================================
 
 export const updateTodo = async function(req, res){
-    const { text, completed } = req.body
+    const { completed } = req.body
     const userId = req.user.id
     const { listId, todoId } = req.params;
     try{
 
-       if(!text){
-            return res.status(404).json({
-                error: "Nome não especificado."
-            })
-        }
 
         if(completed === null || completed === undefined){
             return res.status(400).json({
@@ -141,8 +136,7 @@ export const updateTodo = async function(req, res){
         const updateTodo = await prisma.todo.update({
             where: { id: parseInt(todoId)},
             data: {
-                text: text.trim(),
-                completed: completed,
+                completed: completed
             }
 
         });

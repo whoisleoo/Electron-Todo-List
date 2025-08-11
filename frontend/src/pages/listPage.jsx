@@ -11,6 +11,8 @@ function ListPage() {
     const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false)
     const [input, setInput] = useState('')
+    const [editInput, setEditInput] = useState('')
+    const [isCompleted, setIsCompleted] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
     const [user, setUser] = useState(null);
@@ -33,7 +35,11 @@ function ListPage() {
 }
 
 useEffect(() => {
-    if(selectedList) { buscarTodo() }
+    if(selectedList) { 
+        setErrorMessage('') 
+        setInput('')  
+        buscarTodo() 
+    }
 }, [selectedList])
     
 // ================== post DOS TODO ===================================
@@ -42,8 +48,13 @@ const criarTodo = async function (){
     if(!selectedList) return
 
     if(!input.trim()){ //ve se n ta vazio o input
-        setErrorMessage("* Campo vazio")
+        setErrorMessage("Campo vazio")
         return 
+    }
+
+    if(input.length > 75){
+        setErrorMessage("Max de caracteres: 75")
+        return
     }
 
     setErrorMessage('')
@@ -63,6 +74,46 @@ const criarTodo = async function (){
         setErrorMessage(message)
     }
 }
+
+// ==================PUT DO TODO ===================
+
+    const toggleCompleted = async function (todoId, currentStatus){
+        try{
+            const token = localStorage.getItem('token')
+            await api.put(`/list/${selectedList.id}/todo/${todoId}`,
+                { completed: !currentStatus },
+                {headers: { Authorization: `Bearer ${token}`}}
+            )
+
+            setTodos(todos.map(todo =>
+                todo.id === todoId ? { ...todo, completed: !currentStatus} : todo
+            ))
+        }catch(error){
+            setErrorMessage(`Erro ao alterar status: ${error}`)
+        }
+    }
+
+// ==================DELETE DO TODO ===================
+
+const deletarTodo = async function (todoId){
+ 
+
+    setErrorMessage('')
+    setSuccessMessage('')
+
+    try{
+        const token = localStorage.getItem('token')
+        await api.delete(`/list/${selectedList.id}/todo/${todoId}`, 
+            { headers: { Authorization: `Bearer ${token}`}
+        })
+
+        setTodos(todos.filter(todo => todo.id !== todoId))
+    }catch(error){
+        const message = error.response?.data?.error
+        setErrorMessage(message)
+    }
+}
+
 
 // ======================================================
     const handleLogout = () => {
@@ -234,17 +285,15 @@ const criarTodo = async function (){
                                 {todos.map(todo => (
                                     <div key={todo.id} className="p-4 bg-black border-gray-700 border rounded-lg transition-colors">
                                         <div className="flex items-center gap-3">
-                                            <span className={`flex-1 ${todo.completed ? 'line-through text-gray-500' : 'text-white'}`}>
-                                                {todo.text}
+                                            <span
+                                            onClick={() => toggleCompleted(todo.id, todo.completed)}
+                                            className={`flex-1 cursor-pointer hover:text-gray-400 transition-colors ${todo.completed ? 'line-through text-gray-500' : 'text-white'}`}>
+                                            {todo.text}
                                             </span>
                                             <div className="flex gap-2">
-                                                <span className={`${todo.completed ? 'py-1 px-2 text-sm text-gray-400 border rounded-lg transition-colors' : 'py-1 px-2 text-sm text-white border rounded-lg transition-colors'}`}>{todo.completed ? 'Concluido' : 'Em andamento'}</span>
-                                                <button className="p-1 text-gray-400 hover:text-blue-400 transition-colors" title="Editar">
-                                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                                                    </svg>
-                                                </button>
-                                                <button className="p-1 text-gray-400 hover:text-red-400 transition-colors" title="Excluir">
+                                                <span className={`${todo.completed ? 'py-1 px-2 text-sm text-gray-400 transition-colors' : 'py-1 px-2 text-sm text-white transition-colors'}`}>{todo.completed ? 'Concluido' : 'Em andamento'}</span>
+                                               
+                                                <button onClick={() => deletarTodo(todo.id)} className="p-1 text-gray-400 hover:text-red-400 transition-colors" title="Excluir">
                                                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                                                     </svg>
