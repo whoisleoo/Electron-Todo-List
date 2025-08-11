@@ -10,9 +10,12 @@ function ListPage() {
     const { selectedList, todos, setTodos } = useList() // dados do context
     const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false)
+    const [input, setInput] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
     const [user, setUser] = useState(null);
 
-
+// ================== GET DOS TODO ===================================
     const buscarTodo = async function (){
         if(!selectedList) return
     try{
@@ -31,8 +34,35 @@ useEffect(() => {
     if(selectedList) { buscarTodo() }
 }, [selectedList])
     
+// ================== post DOS TODO ===================================
 
+const criarTodo = async function (){
+    if(!selectedList) return
 
+    if(!input.trim()){ //ve se n ta vazio o input
+        setErrorMessage("Digite o objetivo de sua tarefa.")
+        return 
+    }
+
+    setErrorMessage('')
+
+    try{
+        const token = localStorage.getItem('token')
+        const response = await api.post(`/list/${selectedList.id}/todo`, 
+            { text: input.trim() }, 
+            { headers: { Authorization: `Bearer ${token}`}
+        })
+
+        setTodos([response.data.todo, ...todos]) 
+        setSuccessMessage(`Tarefa ${input} adicionada com sucesso!`)
+        setInput('')
+    }catch(error){
+        const message = error.response?.data?.error
+        setErrorMessage(message)
+    }
+}
+
+// ======================================================
     const handleLogout = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
@@ -124,8 +154,8 @@ useEffect(() => {
                             </svg>
                             <h2 className="text-xl font-semibold mb-2">Nenhuma tarefa criada ainda</h2>
                             <p className="text-sm mb-4">Adicione a primeira tarefa da lista "{selectedList.name}"</p>
-                            <button className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
-                                Adicionar primeira tarefa
+                            <button onClick={criarTodo} className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                               Nova tarefa
                             </button>
                         </div>
                     ) : (
@@ -146,7 +176,7 @@ useEffect(() => {
                                     <div key={todo.id} className="p-4 bg-black border-gray-700 border rounded-lg transition-colors">
                                         <div className="flex items-center gap-3">
                                             <span className={`flex-1 ${todo.completed ? 'line-through text-gray-500' : 'text-white'}`}>
-                                                {todo.text || 'ERRO: Titulo da tarefa não carregado.'}
+                                                {todo.text}
                                             </span>
                                             <div className="flex gap-2">
                                                 <span className={`${todo.completed ? 'py-1 px-2 text-sm text-gray-400 border rounded-lg transition-colors' : 'py-1 px-2 text-sm text-white border rounded-lg transition-colors'}`}>{todo.completed ? 'Concluido' : 'Em andamento'}</span>
