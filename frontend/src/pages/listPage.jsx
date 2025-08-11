@@ -1,14 +1,35 @@
 import { useEffect, useState } from 'react'
 import SideBar from '../components/sideBar'
 import api from '../services/api.js'
+import { useList } from '../contexts/listContext';
 import { useNavigate } from 'react-router-dom';
 
 
 
 function ListPage() {
+    const { selectedList, todos, setTodos } = useList() // dados do context
     const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false)
     const [user, setUser] = useState(null);
+
+
+    const buscarTodo = async function (){
+        if(!selectedList) return
+    try{
+        const token = localStorage.getItem('token')
+        const response = await api.get(`/list/${selectedList.id}/todo`, 
+            { headers: { Authorization: `Bearer ${token}`}
+        })
+
+        setTodos(response.data.todos)
+    }catch(error){
+        setErrorMessage(`Não foi possivel buscar listas devido a ${error}`)
+    }
+}
+
+useEffect(() => {
+    if(selectedList) { buscarTodo() }
+}, [selectedList])
     
 
 
@@ -38,10 +59,9 @@ function ListPage() {
 
 
 
-    return (
+   return (
         <div className="flex h-screen bg-black text-white">
-            <SideBar 
-            />
+            <SideBar />
 
             <div className="flex-1 flex flex-col">
                 <div className="flex justify-end items-center p-4 bg-black border-b border-gray-700">
@@ -54,8 +74,8 @@ function ListPage() {
                                 {user.username.charAt(0).toUpperCase()}
                             </div>
                             <span className="text-sm">{user.username}</span>
-                            <svg // FLECHINHA BONITA
-                                className={`w-4 h-4 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} // roda flechinha quando retornar false
+                            <svg
+                                className={`w-4 h-4 transition-transform ${showUserMenu ? 'rotate-180' : ''}`}
                                 fill="currentColor" 
                                 viewBox="0 0 24 24"
                             >
@@ -77,8 +97,7 @@ function ListPage() {
                                         Logout
                                     </button>
                                     <button
-                                        onClick={() => {  window.close()
-                                        }}
+                                        onClick={() => window.close()}
                                         className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors"
                                     >
                                         Sair do aplicativo
@@ -90,18 +109,67 @@ function ListPage() {
                 </div>
 
                 <div className="flex-1 p-6">
-                    <div className="flex flex-col items-center justify-center h-full text-gray-400">
-                        <svg className="w-16 h-16 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                        </svg>
-                        <h2 className="text-xl font-semibold mb-2">Nenhuma lista encontrada</h2>
-                        <p className="text-sm">Crie uma nova lista na barra lateral</p>
+                    {!selectedList ? (
+                        <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                            <svg className="w-16 h-16 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                            <h2 className="text-xl font-semibold mb-2">Selecione uma lista</h2>
+                            <p className="text-sm">Clique em uma lista na barra lateral para ver suas tarefas</p>
+                        </div>
+                    ) : todos.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                            <svg className="w-16 h-16 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            <h2 className="text-xl font-semibold mb-2">Nenhuma tarefa criada ainda</h2>
+                            <p className="text-sm mb-4">Adicione a primeira tarefa da lista "{selectedList.name}"</p>
+                            <button className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                                Adicionar primeira tarefa
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="max-w-4xl mx-auto">
+                            <div className="flex items-center justify-between mb-6">
+                                <div>
+                                    <h1 className="text-2xl font-bold text-white">{selectedList.name}</h1>
+                                    <p className="text-gray-400 text-sm mt-1">
+                                        Total de larefas: {todos.length}
+                                    </p>
+                                </div>
+                                <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                                    Nova tarefa
+                                </button>
+                            </div>
+                            <div className="space-y-3">
+                                {todos.map(todo => (
+                                    <div key={todo.id} className="p-4 bg-black border-gray-700 border rounded-lg transition-colors">
+                                        <div className="flex items-center gap-3">
+                                            <span className={`flex-1 ${todo.completed ? 'line-through text-gray-500' : 'text-white'}`}>
+                                                {todo.text || 'ERRO: Titulo da tarefa não carregado.'}
+                                            </span>
+                                            <div className="flex gap-2">
+                                                <span className={`${todo.completed ? 'py-1 px-2 text-sm text-gray-400 border rounded-lg transition-colors' : 'py-1 px-2 text-sm text-white border rounded-lg transition-colors'}`}>{todo.completed ? 'Concluido' : 'Em andamento'}</span>
+                                                <button className="p-1 text-gray-400 hover:text-blue-400 transition-colors" title="Editar">
+                                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                                    </svg>
+                                                </button>
+                                                <button className="p-1 text-gray-400 hover:text-red-400 transition-colors" title="Excluir">
+                                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                                    </svg>
+                                        </button>
+                            </div>
+                        </div>
                     </div>
+                ))}
                 </div>
             </div>
-            
-    
-        </div>
+    )}
+    </div>
+</div>
+</div>
     )
 }
 

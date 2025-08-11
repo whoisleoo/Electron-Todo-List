@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useList } from '../contexts/listContext'
 import api from '../services/api'
 
 
 
 
 function SideBar() {
-
+const { selectList }  = useList()
 const [showBar, setShowBar ] = useState(false) 
 const [editMode, setEditMode] = useState(false)
 const [idEdit, setIdEdit] = useState(null)
@@ -262,7 +263,7 @@ const ErrorMessage = ({message}) => {
             ) : (
                 <div className="p-2">
                     {lists.map(lista => (
-                        <div key={lista.id} className="mb-2 p-3 bg-black hover:bg-gray-900/50 transition-colors ">
+                        <div key={lista.id} className="mb-2 p-3 bg-black hover:bg-gray-900/50 transition-colors " onClick={() => selectList(lista)}>
                             {editMode && idEdit === lista.id ? (
                                 <div className="flex items-center gap-2">
                                     <input
@@ -292,8 +293,13 @@ const ErrorMessage = ({message}) => {
                                     </button>
                                 </div>
                             ) : (
-                                <div className="flex items-center justify-between">
-                                    <span className="text-white font-medium">{lista.name}</span>
+                                <div className="flex items-center justify-between"  onClick={() => selectList(lista)}>
+                                    <button
+                                    
+                                        className="text-white font-medium hover:text-indigo-300 transition-colors"
+                                >
+                                    {lista.name}
+                                    </button>
                                     <div className="flex gap-2">
                                         <button
                                             onClick={() => abrirEdit(lista.id, lista.name)}

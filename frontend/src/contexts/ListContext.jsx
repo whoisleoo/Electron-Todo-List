@@ -8,7 +8,7 @@ qe é basicamente pra ver se a lista ta selecionada e pra ver os todos
 
 
 import { createContext, useContext, useState } from "react";
-const listContext = createContext()
+const ListContext = createContext()
 
 export function ListProvider({children}){
     const [selectedList, setSelectedList ] = useState(null) // a lista que vai ser selecionada
@@ -34,7 +34,7 @@ export function ListProvider({children}){
 }
 
 export function useList(){ // hook pra não precisa configurar o use context
-    const context = useContext(listContext)
+    const context = useContext(ListContext)
     if(!context){ // ve se o provider não tá fora de algum componente como o sidebar
         throw new Error('alguma coisa deu errado ai')
     }
