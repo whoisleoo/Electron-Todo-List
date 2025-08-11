@@ -34,6 +34,6 @@ model Todo {
   text      String
   completed Boolean  @default(false)
   listId    Int
-  list      List     @relation(fields: [listId], references: [id])
+  list      List     @relation(fields: [listId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }

@@ -6,7 +6,7 @@ import api from '../services/api'
 
 
 function SideBar() {
-const { selectList }  = useList()
+const { selectList, clearSelectedList, selectedList}  = useList()
 const [showBar, setShowBar ] = useState(false) 
 const [editMode, setEditMode] = useState(false)
 const [idEdit, setIdEdit] = useState(null)
@@ -162,9 +162,12 @@ const deletarLista = async function (){
         await api.delete(`/list/${idDelete}`, 
             { headers: { Authorization: `Bearer ${token}`}
         })
+        
 
         setLists(lists.filter(lista => lista.id !== idDelete))
-
+        if(selectedList && selectedList.id === idDelete){
+            clearSelectedList();
+        }
 
     }catch(error){
         const message = error.response?.data?.error

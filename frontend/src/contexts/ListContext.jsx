@@ -24,9 +24,15 @@ export function ListProvider({children}){
         setTodos([])
     }
 
+    const clearSelectedList = () => {
+        setSelectedList(null)
+        setTodos([])
+    }
+
     const value = { // os vallue que vão ser passado do contexto
         selectedList,
         selectList,
+        clearSelectedList,
         todos,
         setTodos,
         loading,
