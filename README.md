@@ -35,21 +35,21 @@
 
 <div align="center">
  
-### Frontend
+### ▼ Frontend
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-### Backend
+### ▼ Backend
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
 
-### Database & Desktop
+### ▼ Database & Desktop
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Electron](https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=electron&logoColor=white)
 
-### Autenticação & Segurança
+### ▼ Autenticação & Segurança
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
 ![bcrypt](https://img.shields.io/badge/bcrypt-8A2BE2?style=for-the-badge)
 
@@ -59,9 +59,21 @@
 
 ## 💡 Instalação e Execução
 
+### ➤ Execucação
+```bash
+# Para a instalação do executavel acesse
+https://github.com/whoisleoo/Electron-Todo-List/releases/tag/todo
+
+# Instale o arquivo mais recente:
+Task.Hub.1.0.0.exe
+
+````
+### ⚠️ Em caso de detectação conta virus e ameaça desligue seu anti-virus
+  ● Esse erro vai ser arrumado em breve, caso não confie no executavel sugiro que acesse via <a href="https://bmzmarketing.shop">WEB</a>
 
 
-### Instalação
+
+### ➤ Instalação
 
 ```bash
 # Clone o repositório
