@@ -70,6 +70,7 @@ Task.Hub.1.0.0.exe
 ````
 ### ⚠️ Em caso de detectação conta virus e ameaça desligue seu anti-virus
   ● Esse erro vai ser arrumado em breve, caso não confie no executavel sugiro que acesse via <a href="https://bmzmarketing.shop">WEB</a>
+  ● Além disso, caso queira saber mais sobre esse aviso, consulte esse <a href="https://github.com/whoisleoo/Electron-Todo-List/issues/2">issue</a>
 
 
 
