@@ -64,8 +64,9 @@
 # Para a instalação do executavel acesse
 https://github.com/whoisleoo/Electron-Todo-List/releases/tag/todo
 
-# Instale o arquivo mais recente:
-Task.Hub.1.0.0.exe
+# Instale o instalador mais recente
+Task.Hub-1.2.0-x64.exe
+
 
 ````
 ### ⚠️ Em caso de detectação conta virus e ameaça desligue seu anti-virus
