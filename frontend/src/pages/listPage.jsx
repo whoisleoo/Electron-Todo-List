@@ -3,6 +3,9 @@ import SideBar from '../components/sideBar'
 import api from '../services/api.js'
 import { useList } from '../contexts/listContext';
 import { useNavigate } from 'react-router-dom';
+import BlurText from '../components/BlurAnimator';
+import SplitText from '../components/TextAnimator';
+import CountUp from '../components/CountUp';
 
 
 
@@ -198,8 +201,18 @@ const deletarTodo = async function (todoId){
                             <svg className="w-16 h-16 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
                             </svg>
-                            <h2 className="text-xl font-semibold mb-2">Selecione uma lista</h2>
-                            <p className="text-sm">Clique em uma lista na barra lateral para ver suas tarefas</p>
+                            <BlurText 
+                                text="Selecione uma lista" 
+                                className="text-xl font-semibold mb-2"
+                                delay={50}
+                                animateBy="words"
+                            />
+                            <SplitText 
+                                text="Clique em uma lista na barra lateral para ver suas tarefas"
+                                className="text-sm"
+                                delay={30}
+                                splitType="words"
+                            />
                         </div>
                     ) : loading ? (
    <div className="flex flex-col items-center justify-center h-full text-gray-400">
@@ -216,8 +229,18 @@ const deletarTodo = async function (todoId){
                             <svg className="w-16 h-16 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                             </svg>
-                            <h2 className="text-xl font-semibold mb-2">Nenhuma tarefa criada ainda</h2>
-                            <p className="text-sm mb-4">Adicione a primeira tarefa da lista "{selectedList.name}"</p>
+                            <BlurText 
+                                text="Nenhuma tarefa criada ainda" 
+                                className="text-xl font-semibold mb-2"
+                                delay={50}
+                                animateBy="words"
+                            />
+                            <SplitText 
+                                text={`Adicione a primeira tarefa da lista "${selectedList.name}"`}
+                                className="text-sm mb-4"
+                                delay={30}
+                                splitType="words"
+                            />
                              <div className=" bg-black ">
                                  <div className="flex gap-2">
                                  <input
@@ -245,9 +268,16 @@ const deletarTodo = async function (todoId){
                         <div className="max-w-4xl mx-auto h-full flex flex-col">
                             <div className="flex items-center justify-between mb-6">
                                 <div>
-                                    <h1 className="text-2xl font-bold text-white">{selectedList.name}</h1>
+                                    <div style={{ fontFamily: 'Horizon, sans-serif' }}>
+                                        <BlurText 
+                                            text={selectedList.name} 
+                                            className="text-2xl font-bold text-white"
+                                            delay={50}
+                                            animateBy="words"
+                                        />
+                                    </div>
                                     <p className="text-gray-400 text-sm mt-1">
-                                        Total de larefas: {todos.length}
+                                        Total de tarefas: <CountUp from={0} to={todos.length} duration={1} className="inline" />
                                     </p>
                                 </div>
 
