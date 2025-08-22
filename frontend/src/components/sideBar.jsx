@@ -275,7 +275,7 @@ const ErrorMessage = ({message}) => {
                     <p className="text-sm">Nenhuma lista criada ainda</p>
                 </div>
             ) : (
-                <div className="p-2">
+                <div className="p-2 overflow-y-auto max-h-full">
                     {lists.map(lista => (
                         <div key={lista.id} className="mb-2 p-3 bg-black hover:bg-gray-900/50 transition-colors " onClick={() => selectList(lista)}>
                             {editMode && idEdit === lista.id ? (
