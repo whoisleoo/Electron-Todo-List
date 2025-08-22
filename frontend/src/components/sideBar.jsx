@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useList } from '../contexts/listContext'
 import api from '../services/api'
+import BlurText from './BlurAnimator'
+import SplitText from './TextAnimator'
+import CountUp from './CountUp'
 
 
 
@@ -212,7 +215,12 @@ const ErrorMessage = ({message}) => {
     return (
         <div className="w-80 bg-black border-r border-gray-700 flex flex-col">
             <div className="p-4 border-b border-gray-700">
-                <h2 className="text-lg font-semibold text-white mb-4">Suas Listas</h2>
+                <BlurText 
+                    text="Suas Listas" 
+                    className="text-lg font-semibold text-white mb-4"
+                    delay={30}
+                    animateBy="words"
+                />
                 
                 <button onClick={() => setShowBar(!showBar)}
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
@@ -272,7 +280,12 @@ const ErrorMessage = ({message}) => {
                     <svg className="w-12 h-12 mx-auto mb-3 opacity-50" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
                     </svg>
-                    <p className="text-sm">Nenhuma lista criada ainda</p>
+                    <SplitText 
+                        text="Nenhuma lista criada ainda"
+                        className="text-sm"
+                        delay={50}
+                        splitType="words"
+                    />
                 </div>
             ) : (
                 <div className="p-2 overflow-y-auto max-h-full">
@@ -375,7 +388,12 @@ const ErrorMessage = ({message}) => {
             </div>
             <div className="p-4 border-t border-black">
                 <div className="text-xs text-gray-400 text-center">
-                    Desenvolvido por whoisleoo
+                    <SplitText 
+                        text="Desenvolvido por whoisleoo"
+                        className="text-xs text-gray-400"
+                        delay={20}
+                        splitType="chars"
+                    />
                 </div>
             </div>
         </div>
