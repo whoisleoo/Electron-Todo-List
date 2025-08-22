@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'
 import api from '../services/api.js'
+import SplitText from '../components/TextAnimator.jsx';
+import TextType from '../components/TypeAnimator.jsx';
+import BlurText from '../components/BlurAnimator.jsx';
 
 function Home() {
   const navigate = useNavigate();
@@ -135,8 +138,20 @@ function Home() {
   const LoginForm = () => (
     <div className="backdrop-blur-md bg-black rounded-2xl p-8 shadow-2xl border border-slate-700/50 max-w-md w-full mx-4">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-white mb-2">Entrar</h2>
-        <p className="text-gray-300">Acesse sua conta</p>
+        <div style={{ fontFamily: 'Horizon, sans-serif' }}>
+          <BlurText 
+            text="Entrar" 
+            className="text-3xl font-bold text-white mb-2 text-center justify-center"
+            delay={30}
+            animateBy="chars"
+          />
+        </div>
+        <SplitText 
+          text="Acesse sua conta"
+          className="text-gray-300"
+          delay={50}
+          splitType="words"
+        />
       </div>
       
     <ErrorMessage message={loginError} />
@@ -190,8 +205,20 @@ function Home() {
   const RegisterForm = () => (
     <div className="backdrop-blur-md bg-black rounded-2xl p-8 shadow-2xl border border-slate-700/50 max-w-md w-full mx-4">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-white mb-2">Cadastrar</h2>
-        <p className="text-gray-300">Crie sua conta</p>
+        <div style={{ fontFamily: 'Horizon, sans-serif' }}>
+          <BlurText 
+            text="Cadastrar" 
+            className="text-3xl font-bold text-white mb-2 text-center justify-center"
+            delay={30}
+            animateBy="chars"
+          />
+        </div>
+        <SplitText 
+          text="Crie sua conta"
+          className="text-gray-300"
+          delay={50}
+          splitType="words"
+        />
       </div>
 
       <ErrorMessage message={registerError} />
@@ -272,12 +299,19 @@ function Home() {
                <div className="inline-block p-2 rounded-full bg-indigo-600 backdrop-blur-md border border-slate-700/50 shadow-2xl mb-8 overflow-hidden">
                 <img src="/logo.png" alt="Logo" className="w-20 h-20 rounded-full object-cover" />
               </div>
-              
-              <h1 className="text-4xl font-bold text-white mb-4 tracking-tight">
-                Task <span className=' hover:text-indigo-700 hover:border-b hover:border-indigo-700 hover:transition-all'>Hub</span>
+
+
+
+              <h1 className="text-4xl font-bold text-white mb-4 tracking-tight" style={{ fontFamily: 'Horizon, sans-serif' }}>
+                    <SplitText text="Task" delay={100} duration={0.6} ease="power3.out" splitType="chars" from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0 }}
+   threshold={0.1}>
+   </SplitText>
+                <span className=' hover:text-indigo-700 hover:border-b hover:border-indigo-700 hover:transition-all'> <SplitText text="Hub" delay={100} duration={0.6} ease="power3.out" splitType="chars" from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0 }}
+   threshold={0.1}>
+   </SplitText></span>
               </h1>
               <p className="text-m1 text-gray-300 max-w-md mx-auto leading-relaxed">
-                Organize suas tarefas e objetivos
+                <TextType text={["Organize suas tarefas!", "Organize seus objetivos!", "Desenvolva suas metas!"]} typingSpeed={60} pauseDuration={1500} showCursor={true} cursorCharacter="|"></TextType>
               </p>
             </div>
 
@@ -287,19 +321,24 @@ function Home() {
                         onClick={() => { setCurrentView('login'); clearError(); }}
                   className="group relative px-8 py-4 bg-indigo-600 hover:bg-indigo-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 min-w-[160px]"
                 >
-                  <span className="relative z-10" >Entrar</span>
+                  <span className="relative z-10 text-center w-full block">Entrar</span>
                 </button>
                 
                 <button
                         onClick={() => { setCurrentView('register'); clearError(); }}
                   className="group relative px-8 py-4 bg-slate-800/50 backdrop-blur-md border border-slate-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:bg-slate-700/50 min-w-[160px]"
                 >
-                  <span className="relative z-10">Cadastrar</span>
+                  <span className="relative z-10 text-center w-full block">Cadastrar</span>
                 </button>
               </div>
               
               <p className="text-gray-400 text-sm mt-8">
-                Desenvolvido por <span className="hover:text-indigo-500 transition-colors">whoisleoo</span>
+                <SplitText 
+                  text="Desenvolvido por whoisleoo | TaskHub v1.2.0"
+                  className="text-gray-400 text-sm"
+                  delay={20}
+                  splitType="chars"
+                />
               </p>
             </div>
           </div>
