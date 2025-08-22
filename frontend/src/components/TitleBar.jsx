@@ -32,10 +32,10 @@ function CustomTitleBar() {
     }
 
     return (
-        <div className="flex items-center justify-between bg-black h-10 select-none">
+        <div className="flex items-center justify-between bg-black h-10 select-none" style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999}}>
             <div className="flex items-center px-4 space-x-3">
                 <img 
-                    src="../src/assets/icons/icon.png" 
+                    src="/icon.png" 
                     alt="Logo" 
                     className="w-6 h-6 rounded-full object-cover"
                 />
