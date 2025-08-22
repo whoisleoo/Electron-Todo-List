@@ -97,6 +97,10 @@ npm install
 npx prisma generate
 npx prisma migrate dev
 
+# Configure o .env
+DATABASE_URL="file:./src/database/dev.db"
+JWT_SECRET=""
+
 # Inicie o frontend na pasta frontend
 npm run dev
 
