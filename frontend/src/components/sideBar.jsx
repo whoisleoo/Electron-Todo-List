@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useList } from '../contexts/listContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 import api from '../services/api'
 import BlurText from './BlurAnimator'
 import SplitText from './TextAnimator'
@@ -309,14 +311,14 @@ const ErrorMessage = ({message}) => {
                                         className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm transition-colors"
                                         title="Salvar"
                                     >
-                                        ✓
+                                     <FontAwesomeIcon icon={faCheck} style={{color: "#ffffff",}} />
                                     </button>
                                     <button
                                         onClick={fecharEdit}
                                         className="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm transition-colors"
                                         title="Cancelar"
                                     >
-                                        X
+                                      <FontAwesomeIcon icon={faXmark} style={{color: "#ffffff",}} />
                                     </button>
                                 </div>
                             ) : (
