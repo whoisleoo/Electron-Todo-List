@@ -143,7 +143,7 @@ const deletarTodo = async function (todoId){
 
 
    return (
-        <div className="flex h-screen bg-black text-white">
+        <div className="flex h-screen bg-black text-white overflow-hidden">
             <SideBar />
 
             <div className="flex-1 flex flex-col">
@@ -191,7 +191,7 @@ const deletarTodo = async function (todoId){
                     </div>
                 </div>
 
-                <div className="flex-1 p-6">
+                <div className="flex-1 p-6 h-full overflow-hidden">
                     
                     {!selectedList ? (
                         <div className="flex flex-col items-center justify-center h-full text-gray-400">
@@ -242,7 +242,7 @@ const deletarTodo = async function (todoId){
                            
                         </div>
                     ) : (
-                        <div className="max-w-4xl mx-auto">
+                        <div className="max-w-4xl mx-auto h-full flex flex-col">
                             <div className="flex items-center justify-between mb-6">
                                 <div>
                                     <h1 className="text-2xl font-bold text-white">{selectedList.name}</h1>
@@ -252,7 +252,7 @@ const deletarTodo = async function (todoId){
                                 </div>
 
 
-                             <div className=" bg-black ">
+                             <div className="bg-black">
                                  <div className="flex gap-2">
                                  <input
                                     type="text"
@@ -263,8 +263,7 @@ const deletarTodo = async function (todoId){
                       if (e.key === 'Enter') criarTodo()
                       if (e.key === 'Escape') setShowForm(false)
                   }}
-                  className="flex-1 px-3 py-2 bg-black border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2
-                     focus:ring-indigo-500" autoFocus/>
+                  className="flex-1 min-w-80 px-3 py-2 bg-black border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" autoFocus/>
               <button
                   onClick={criarTodo}
                   className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
@@ -281,7 +280,7 @@ const deletarTodo = async function (todoId){
 
                         
 
-                            <div className="space-y-3">
+                            <div className="space-y-3 overflow-y-auto flex-1 max-h-[600px]">
                                 {todos.map(todo => (
                                     <div key={todo.id} className="p-4 bg-black border-gray-700 border rounded-lg transition-colors">
                                         <div className="flex items-center gap-3">
