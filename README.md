@@ -75,7 +75,7 @@ Task.Hub-1.2.0-x64.exe
 
 
 
-### ➤ Instalação
+### ➤ Instalação Manual
 
 ```bash
 # Clone o repositório
