@@ -12,7 +12,7 @@ function App() {
     
      <Router>
       <TitleBar />
-      <div className="min-h-screen bg-gray-100">
+      <div className="h-screen bg-gray-100 pt-10 overflow-hidden">
         <main className='flex-1'>
         <Routes>
           <Route path="/" element={<Home />} />
