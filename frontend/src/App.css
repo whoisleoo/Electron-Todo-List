@@ -1,13 +1,35 @@
 @import "tailwindcss";
-
+@font-face {
+  font-family: 'Horizon';
+  src: url('./assets/horizon.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 #root {
+  font-family: 'Figtree', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
   overflow: hidden;
 }
+
+.custom-cursor {
+  cursor: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M4.5.79v22.42l6.56-6.57h9.29L4.5.79z'/%3E%3C/svg%3E") 0 0, auto;
+}
+
+.custom-cursor * {
+  cursor: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M4.5.79v22.42l6.56-6.57h9.29L4.5.79z'/%3E%3C/svg%3E") 0 0, auto;
+}
+
 
 .logo {
   height: 6em;
@@ -21,6 +43,8 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+
+
 
 @keyframes logo-spin {
   from {
