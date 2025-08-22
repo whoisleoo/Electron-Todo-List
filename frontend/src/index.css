@@ -1,4 +1,12 @@
 @import "tailwindcss";
+
+/* Importar fonte Horizon */
+@font-face {
+  font-family: 'Horizon';
+  src: url('/horizon.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
 *::-webkit-scrollbar {
   width: 4px;
 }
@@ -28,6 +36,28 @@ html, body {
   height: 100%;
   background-color: #000000;
   overflow: hidden;
+  cursor: url('/cursor.png'), auto;
+}
+
+button, 
+a, 
+[role="button"], 
+.cursor-pointer,
+input[type="submit"],
+input[type="button"],
+select,
+[onclick] {
+  cursor: url('/cursor.png'), pointer !important;
+}
+button:hover, 
+a:hover, 
+[role="button"]:hover, 
+.cursor-pointer:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+select:hover,
+[onclick]:hover {
+  cursor: url('/cursor.png'), pointer !important;
 }
 
 #root {
@@ -56,3 +86,4 @@ html, body {
 .card {
   padding: 2em;
 }
+
