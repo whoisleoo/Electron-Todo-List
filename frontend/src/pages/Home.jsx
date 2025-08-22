@@ -164,6 +164,12 @@ function Home() {
             className="w-full px-4 py-3 bg-slate-900/5 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent backdrop-blur-sm"
             ref={inputUsernameLogin}
             required
+            onKeyDown={(e) =>{
+              if(e.key == 'ArrowDown'){
+                 e.preventDefault()
+              inputSenhaLogin.current.focus()
+              }
+            }}
           />
         </div>
         <div>
@@ -173,6 +179,15 @@ function Home() {
             className="w-full px-4 py-3 bg-slate-900/5 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent backdrop-blur-sm"
             ref={inputSenhaLogin}
             required
+            onKeyDown={(e) =>{
+              if(e.key == 'ArrowUp'){
+                 e.preventDefault()
+              inputUsernameLogin.current.focus()
+              }
+              if(e.key == 'Enter'){
+                HandleLogin(e);
+              }
+            }}
           />
         </div>
         <button
@@ -231,6 +246,12 @@ function Home() {
             placeholder="Usuário"
             className="w-full px-4 py-3 bg-slate-900/5 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent backdrop-blur-sm"
             ref={inputUsername}
+           onKeyDown={(e) =>{
+              if(e.key == 'ArrowDown'){
+                 e.preventDefault()
+              inputEmail.current.focus()
+              }
+            }}
             required
           />
         </div>
@@ -241,6 +262,16 @@ function Home() {
             className="w-full px-4 py-3 bg-slate-900/5 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent backdrop-blur-sm"
             ref={inputEmail}
             required
+             onKeyDown={(e) =>{
+              if(e.key == 'ArrowDown'){
+                 e.preventDefault()
+              inputSenha.current.focus()
+              }
+              if(e.key == 'ArrowUp'){
+                 e.preventDefault()
+              inputUsername.current.focus()
+              }
+            }}
           />
         </div>
         <div>
@@ -250,6 +281,16 @@ function Home() {
             className="w-full px-4 py-3 bg-slate-900/5 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent backdrop-blur-sm"
             ref={inputSenha}
             required
+            onKeyDown={(e) =>{
+              if(e.key == 'ArrowDown'){
+                 e.preventDefault()
+              inputConfirmarSenha.current.focus()
+              }
+              if(e.key == 'ArrowUp'){
+                 e.preventDefault()
+              inputEmail.current.focus()
+              }
+            }}
           />
         </div>
         <div>
@@ -259,6 +300,15 @@ function Home() {
             className="w-full px-4 py-3 bg-slate-900/5 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent backdrop-blur-sm"
             ref={inputConfirmarSenha}
             required
+             onKeyDown={(e) =>{
+              if(e.key == 'ArrowUp'){
+                 e.preventDefault()
+              inputSenha.current.focus()
+              }
+              if(e.key == 'Enter'){
+                HandleRegister(e);
+              }
+            }}
           />
         </div>
         <button
