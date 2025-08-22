@@ -270,7 +270,7 @@ function Home() {
           <div className="text-center">
             <div className="mb-12">
                <div className="inline-block p-2 rounded-full bg-indigo-600 backdrop-blur-md border border-slate-700/50 shadow-2xl mb-8 overflow-hidden">
-                <img src="../src/assets/icons/logo.png" alt="Logo" className="w-20 h-20 rounded-full object-cover" />
+                <img src="/logo.png" alt="Logo" className="w-20 h-20 rounded-full object-cover" />
               </div>
               
               <h1 className="text-4xl font-bold text-white mb-4 tracking-tight">
