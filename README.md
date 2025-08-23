@@ -16,11 +16,11 @@
 
 ---
 
-## 👾 Sobre o Projeto
+## Sobre o Projeto
 
 **TaskHub** é uma aplicação desktop de gerenciamento de tarefas desenvolvida como projeto pessoal para aprendizado e prática de tecnologias modernas. 
 
-### ✨ Principais Funcionalidades
+### Principais Funcionalidades
 
 - ➤ **Criação de Listas** - Organize suas tarefas em listas.
 - ➤ **Gerenciamento de Tarefas** - Adicione, remova e marque como concluida.
@@ -31,7 +31,7 @@
 
 ---
 
-## 👨‍💻 Ferramentas utilizadas
+## Ferramentas utilizadas
 
 <div align="center">
  
@@ -57,7 +57,7 @@
 
 ---
 
-## 💡 Instalação e Execução
+## Instalação e Execução
 
 ### ➤ Execucação
 ```bash
