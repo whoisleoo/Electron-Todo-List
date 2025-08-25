@@ -279,6 +279,9 @@ const deletarTodo = async function (todoId){
                                     <p className="text-gray-400 text-sm mt-1">
                                         Total de tarefas: <CountUp from={0} to={todos.length} duration={1} className="inline" />
                                     </p>
+                                    <p className="text-gray-400 text-sm mt-1">
+                                        Total de tarefas concluidas: <CountUp from={0} to={todos.filter(todo => + todo.completed).length} duration={1} className="inline" />
+                                    </p>
                                 </div>
 
 
