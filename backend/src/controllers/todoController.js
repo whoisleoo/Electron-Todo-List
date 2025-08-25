@@ -27,7 +27,7 @@ export const buscarTodo = async function(req, res){
 
         const allTodo = await prisma.todo.findMany({
             where: { listId: parseInt(listId)},
-            orderBy: { createdAt: 'desc'}
+            orderBy: [ { prioridade: 'desc' }, { createdAt: 'desc'}]
 
         });
 
@@ -100,7 +100,7 @@ export const createTodo = async function(req, res){
 // =====================================================================
 
 export const updateTodo = async function(req, res){
-    const { completed } = req.body
+    const { completed, text, prioridade } = req.body
     const userId = req.user.id
     const { listId, todoId } = req.params;
     try{
@@ -109,6 +109,18 @@ export const updateTodo = async function(req, res){
         if(completed === null || completed === undefined){
             return res.status(400).json({
                 error: "Status é obrigatório."
+            })
+        }
+
+        if(!prioridade ){
+            return res.status(400).json({
+                error: "Prioridade inválida."
+            })
+        }
+
+        if(!text){
+            return res.status(400).json({
+                error: "Campo vazio."
             })
         }
 
@@ -136,7 +148,9 @@ export const updateTodo = async function(req, res){
         const updateTodo = await prisma.todo.update({
             where: { id: parseInt(todoId)},
             data: {
-                completed: completed
+                completed: completed,
+                text: text.trim(),
+                prioridade: prioridade
             }
 
         });
