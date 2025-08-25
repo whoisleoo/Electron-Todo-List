@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import BlurText from '../components/BlurAnimator';
 import SplitText from '../components/TextAnimator';
 import CountUp from '../components/CountUp';
+import PrioritySelect from '../components/Dropdown.jsx';
 
 
 
@@ -19,6 +20,14 @@ function ListPage() {
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
     const [user, setUser] = useState(null);
+
+
+    const corPrioridade = {
+        NORMAL: {color: 'bg-gray-600', label: "Normal"},
+        PRIORIDADE: {color: 'bg-yellow-500', label: "Prioridade"},
+        URGENTE: {color: 'bg-red-500', label: "Urgente"},
+
+    }
 
 // ================== GET DOS TODO ===================================
     const buscarTodo = async function (){
@@ -83,8 +92,15 @@ const criarTodo = async function (){
     const toggleCompleted = async function (todoId, currentStatus){
         try{
             const token = localStorage.getItem('token')
+
+            const currentTodo = todos.find(todo => todo.id === todoId)
+            
             await api.put(`/list/${selectedList.id}/todo/${todoId}`,
-                { completed: !currentStatus },
+                { completed: !currentStatus, 
+                  text: currentTodo.text,
+                  prioridade: currentTodo.prioridade || 'NORMAL'
+
+                },
                 {headers: { Authorization: `Bearer ${token}`}}
             )
 
@@ -95,6 +111,40 @@ const criarTodo = async function (){
             setErrorMessage(`Erro ao alterar status: ${error}`)
         }
     }
+//================== PUT DE PRIORIDADE ======================
+
+const togglePriority = async function (todoId, prioridade){
+
+        try{
+            const token = localStorage.getItem('token')
+
+            const currentTodo = todos.find(todo => todo.id === todoId)
+
+            if(!currentTodo){
+                setErrorMessage("Tarefa não encontrada.")
+                return
+            }
+            
+            await api.put(`/list/${selectedList.id}/todo/${todoId}`,
+                { completed: currentTodo.completed, 
+                  text: currentTodo.text,
+                  prioridade: prioridade
+
+                },
+                {headers: { Authorization: `Bearer ${token}`}}
+            )
+
+            setTodos(todos.map(todo =>
+                todo.id === todoId ? { ...todo, prioridade: prioridade} : todo
+            ))
+        }catch(error){
+            setErrorMessage(`Erro ao alterar prioridade: ${error}`)
+        }
+    }
+
+
+
+
 
 // ==================DELETE DO TODO ===================
 
@@ -279,9 +329,21 @@ const deletarTodo = async function (todoId){
                                     <p className="text-gray-400 text-sm mt-1">
                                         Total de tarefas: <CountUp from={0} to={todos.length} duration={1} className="inline" />
                                     </p>
-                                    <p className="text-gray-400 text-sm mt-1">
+                                    {todos.filter(todo => + todo.completed).length > 0 &&(
+                                          <p className="text-gray-400 text-sm mt-1">
                                         Total de tarefas concluidas: <CountUp from={0} to={todos.filter(todo => + todo.completed).length} duration={1} className="inline" />
                                     </p>
+                                    )}
+                                    {todos.filter(todo => todo.prioridade) === "PRIORIDADE" &&(
+                                          <p className="text-gray-400 text-sm mt-1">
+                                        Tarefas prioritárias: <CountUp from={0} to={todos.filter(todo => + todo.prioridade == "PRIORIDADE").length} duration={1} className="inline" />
+                                    </p>
+                                    )}
+                                     {todos.filter(todo => todo.prioridade) === "URGENTE" &&(
+                                          <p className="text-gray-400 text-sm mt-1">
+                                        Tarefas urgentes: <CountUp from={0} to={todos.filter(todo => + todo.prioridade == "URGENTE").length} duration={1} className="inline" />
+                                    </p>
+                                    )}
                                 </div>
 
 
@@ -323,6 +385,11 @@ const deletarTodo = async function (todoId){
                                             {todo.text}
                                             </span>
                                             <div className="flex gap-2">
+                                                  <PrioritySelect
+                                                    currentPriority={todo.prioridade}
+                                                    onPriorityChange={togglePriority}
+                                                    todoId={todo.id}
+                                                    corPrioridade={corPrioridade}/>
                                                 <span className={`${todo.completed ? 'py-1 px-2 text-sm text-gray-400 transition-colors' : 'py-1 px-2 text-sm text-white transition-colors'}`}>{todo.completed ? 'Concluido' : 'Em andamento'}</span>
                                                
                                                 <button onClick={() => deletarTodo(todo.id)} className="p-1 text-gray-400 hover:text-red-400 transition-colors" title="Excluir">
