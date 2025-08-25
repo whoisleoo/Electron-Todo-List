@@ -30,10 +30,17 @@ model List {
 }
 
 model Todo {
-  id        Int      @id @default(autoincrement())
-  text      String
-  completed Boolean  @default(false)
-  listId    Int
-  list      List     @relation(fields: [listId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
+  id         Int         @id @default(autoincrement())
+  text       String
+  completed  Boolean     @default(false)
+  listId     Int
+  list       List        @relation(fields: [listId], references: [id], onDelete: Cascade)
+  prioridade Prioridades @default(NORMAL)
+  createdAt  DateTime    @default(now())
+}
+
+enum Prioridades {
+  NORMAL
+  PRIORIDADE
+  URGENTE
 }
